@@ -1,5 +1,5 @@
-build: main.c
-	gcc `pkg-config --cflags raylib` -o simulation main.c `pkg-config --libs raylib`
+simulation: main.c
+	gcc `pkg-config --cflags raylib` -o $@ $^ `pkg-config --libs raylib`
 
 clean:
 	rm simulation
