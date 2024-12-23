@@ -59,7 +59,8 @@ void draw_app(AppState *app) {
 
 void update_app_state(AppState *app, float dt) {
     float dist = Vector2Distance(app->b1.pos, app->b2.pos);
-    Vector2 r = Vector2Scale(Vector2Subtract(app->b1.pos, app->b2.pos), 1.0 / dist);
+    Vector2 r = Vector2Scale(Vector2Subtract(app->b1.pos, app->b2.pos),
+                             1.0 / dist);
 
     app->b1.acc = Vector2Scale(r, (-G * app->b2.mass) / (dist * dist));
     app->b2.acc = Vector2Scale(r, (G * app->b1.mass) / (dist * dist));
@@ -74,7 +75,8 @@ void update_app_state(AppState *app, float dt) {
     app->b1.pos = Vector2Add(app->b1.pos, Vector2Scale(app->b1.vel, dt));
     app->b2.pos = Vector2Add(app->b2.pos, Vector2Scale(app->b2.vel, dt));
 
-    if (CheckCollisionCircles(app->b1.pos, app->b1.radius, app->b2.pos, app->b2.radius)) {
+    if (CheckCollisionCircles(app->b1.pos, app->b1.radius,
+                              app->b2.pos, app->b2.radius)) {
         app->b1.pos = b1_prev_pos;
         app->b2.pos = b2_prev_pos;
 
