@@ -113,7 +113,7 @@ int main()
     struct AppState app;
     init_app_state(&app);
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "2-struct Body Simulation");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "2-Body Simulation");
 
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
