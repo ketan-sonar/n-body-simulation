@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,7 +13,8 @@
 #define G (3*1e5)
 #define DAMPNING (0.95)
 
-typedef struct {
+struct Body
+{
     Vector2 pos;
     Vector2 vel;
     Vector2 acc;
@@ -23,41 +23,46 @@ typedef struct {
     Color color;
     Vector2 trajectory[TRAJECTORY_LENGTH];
     size_t current_trajectory_index;
-} Body;
+};
 
-typedef struct {
-    Body b1;
-    Body b2;
-} AppState;
+struct AppState
+{
+    struct Body b1;
+    struct Body b2;
+};
 
-void init_app_state(AppState *app) {
-    app->b1 = (Body){
+void init_app_state(struct AppState *app)
+{
+    app->b1 = (struct Body){
         { 100, 200 }, { 150, 0 }, { 0, 0 },
         25, 100, RED,
         { 0 }, -1,
     };
 
-    app->b2 = (Body){
+    app->b2 = (struct Body){
         { 400, 500 }, { -150, 0 }, { 0, 0 },
         15, 50, BLUE,
         { 0 }, -1,
     };
 }
 
-void draw_trajectory(Body *body) {
+void draw_trajectory(struct Body *body)
+{
     for (size_t i = 0; i < TRAJECTORY_LENGTH; ++i) {
         DrawCircleV(body->trajectory[i], TRAJECTORY_POINT_RADIUS, body->color);
     }
 }
 
-void draw_app(AppState *app) {
+void draw_app(struct AppState *app)
+{
     draw_trajectory(&app->b1);
     draw_trajectory(&app->b2);
     DrawCircleV(app->b1.pos, app->b1.radius, app->b1.color);
     DrawCircleV(app->b2.pos, app->b2.radius, app->b2.color);
 }
 
-void update_app_state(AppState *app, float dt) {
+void update_app_state(struct AppState *app, float dt)
+{
     float dist = Vector2Distance(app->b1.pos, app->b2.pos);
     Vector2 r = Vector2Scale(Vector2Subtract(app->b1.pos, app->b2.pos),
                              1.0 / dist);
@@ -103,11 +108,12 @@ void update_app_state(AppState *app, float dt) {
     }
 }
 
-int main() {
-    AppState app;
+int main()
+{
+    struct AppState app;
     init_app_state(&app);
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "2-Body Simulation");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "2-struct Body Simulation");
 
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
