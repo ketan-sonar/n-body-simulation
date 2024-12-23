@@ -103,7 +103,7 @@ void update_app_state(AppState *app, float dt) {
     }
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     AppState app;
     init_app_state(&app);
 
